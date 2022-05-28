@@ -7,17 +7,18 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.gmail.orlandroyd.foody.RecipesFragment"
-        android:label="fragment_recipes"
+        android:name="com.gmail.orlandroyd.foody.presentation.recipes.RecipesFragment"
+        android:label="@string/recipes_fragment"
         tools:layout="@layout/fragment_recipes" />
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="com.gmail.orlandroyd.foody.FavoriteRecipesFragment"
-        android:label="fragment_favorite_recipes"
+        android:name="com.gmail.orlandroyd.foody.presentation.favorites.FavoriteRecipesFragment"
+        android:label="@string/favorite_recipes_fragment"
         tools:layout="@layout/fragment_favorite_recipes" />
     <fragment
         android:id="@+id/foodJokeFragment"
-        android:name="com.gmail.orlandroyd.foody.FoodJokeFragment"
-        android:label="fragment_food_joke"
+        android:name="com.gmail.orlandroyd.foody.presentation.foodjoke.FoodJokeFragment"
+        android:label="@string/food_joke_fragment"
         tools:layout="@layout/fragment_food_joke" />
+
 </navigation>
