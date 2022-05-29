@@ -39,6 +39,20 @@ class RecipesViewModel @Inject constructor(
             }
         }
 
+    fun saveMealAndDietTypeTemp(
+        mealType: String,
+        mealTypeId: Int,
+        dietType: String,
+        dietTypeId: Int
+    ) {
+        mealAndDiet = MealAndDietType(
+            mealType,
+            mealTypeId,
+            dietType,
+            dietTypeId
+        )
+    }
+
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
         queries[QUERY_NUMBER] = "50"
