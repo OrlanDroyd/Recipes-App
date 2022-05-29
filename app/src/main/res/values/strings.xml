@@ -7,5 +7,6 @@
     <string name="recipes_fragment">Recipes</string>
     <string name="favorite_recipes_fragment">Favorites</string>
     <string name="food_joke_fragment">Food Joke</string>
+    <string name="vegan">Vegan</string>
 
 </resources>
