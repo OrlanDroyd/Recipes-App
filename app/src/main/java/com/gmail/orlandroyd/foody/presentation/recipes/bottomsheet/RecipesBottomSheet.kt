@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.gmail.orlandroyd.foody.databinding.RecipesBottomSheetBinding
@@ -19,7 +19,7 @@ import java.util.*
 
 class RecipesBottomSheet : BottomSheetDialogFragment() {
 
-    private val recipesViewModel by viewModels<RecipesViewModel>()
+    private lateinit var recipesViewModel: RecipesViewModel
 
     private var mealTypeChip = DEFAULT_MEAL_TYPE
     private var mealTypeChipId = 0
@@ -28,6 +28,11 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: RecipesBottomSheetBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

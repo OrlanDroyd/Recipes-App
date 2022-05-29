@@ -87,6 +87,7 @@ class RecipesFragment : Fragment() {
                     response.data?.let {
                         mAdapter.setData(it)
                     }
+                    recipesViewModel.saveMealAndDietType()
                 }
             }
         }
