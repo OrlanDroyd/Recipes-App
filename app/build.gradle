@@ -109,9 +109,7 @@ dependencies {
 
     // Shimmer
     def shimmer_facebook_version = '0.5.0'
-    def shimmer_todkars_version = '0.4.1'
     implementation "com.facebook.shimmer:shimmer:$shimmer_facebook_version"
-    implementation "com.todkars:shimmer-recyclerview:$shimmer_todkars_version"
 
     // Jsoup
     def jsoup_version = '1.13.1'
