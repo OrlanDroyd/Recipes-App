@@ -1,8 +1,9 @@
 package com.gmail.orlandroyd.foody.data.remote.dto
 
+
 import com.google.gson.annotations.SerializedName
 
-data class FoodRecipe(
-    @SerializedName("results")
-    val results: List<Result>
+data class FoodJokeDto(
+    @SerializedName("text")
+    val text: String
 )

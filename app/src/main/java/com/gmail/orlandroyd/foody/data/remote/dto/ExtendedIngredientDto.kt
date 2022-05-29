@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ExtendedIngredient(
+data class ExtendedIngredientDto(
     @SerializedName("amount")
     val amount: Double,
     @SerializedName("consistency")

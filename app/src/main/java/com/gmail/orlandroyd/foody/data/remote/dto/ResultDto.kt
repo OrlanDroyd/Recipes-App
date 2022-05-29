@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 @Parcelize
-data class Result(
+data class ResultDto(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
     @SerializedName("cheap")
@@ -14,7 +14,7 @@ data class Result(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: @RawValue List<ExtendedIngredient>,
+    val extendedIngredients: @RawValue List<ExtendedIngredientDto>,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
