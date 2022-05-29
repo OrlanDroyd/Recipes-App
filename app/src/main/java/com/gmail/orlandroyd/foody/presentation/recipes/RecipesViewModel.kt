@@ -3,6 +3,7 @@ package com.gmail.orlandroyd.foody.presentation.recipes
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.gmail.orlandroyd.foody.data.datastore.DataStoreRepository
 import com.gmail.orlandroyd.foody.data.datastore.MealAndDietType
@@ -30,6 +31,7 @@ class RecipesViewModel @Inject constructor(
     var backOnline = false
 
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
 
     fun saveMealAndDietType() =
         viewModelScope.launch(Dispatchers.IO) {
