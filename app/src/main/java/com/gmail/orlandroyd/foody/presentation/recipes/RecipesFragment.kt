@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.orlandroyd.foody.MainViewModel
-import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.databinding.FragmentRecipesBinding
 import com.gmail.orlandroyd.foody.util.NetworkResult
 import com.gmail.orlandroyd.foody.util.observeOnce
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RecipesFragment : Fragment(R.layout.fragment_recipes) {
+class RecipesFragment : Fragment() {
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
@@ -34,6 +33,9 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
 
         setupRecyclerView()
         readDatabase()
