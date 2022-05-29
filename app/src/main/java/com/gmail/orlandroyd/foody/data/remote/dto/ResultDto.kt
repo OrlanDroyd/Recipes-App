@@ -1,7 +1,6 @@
 package com.gmail.orlandroyd.foody.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.RawValue
 
 data class ResultDto(
     @SerializedName("aggregateLikes")
@@ -11,7 +10,7 @@ data class ResultDto(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: @RawValue List<ExtendedIngredientDto>,
+    val extendedIngredients: List<ExtendedIngredientDto>,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
