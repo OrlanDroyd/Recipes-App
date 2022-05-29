@@ -9,7 +9,11 @@
         android:id="@+id/recipesFragment"
         android:name="com.gmail.orlandroyd.foody.presentation.recipes.RecipesFragment"
         android:label="@string/recipes_fragment"
-        tools:layout="@layout/fragment_recipes" />
+        tools:layout="@layout/fragment_recipes">
+        <action
+            android:id="@+id/action_recipesFragment_to_recipesBottomSheet"
+            app:destination="@id/recipesBottomSheet" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteRecipesFragment"
         android:name="com.gmail.orlandroyd.foody.presentation.favorites.FavoriteRecipesFragment"
@@ -20,5 +24,16 @@
         android:name="com.gmail.orlandroyd.foody.presentation.foodjoke.FoodJokeFragment"
         android:label="@string/food_joke_fragment"
         tools:layout="@layout/fragment_food_joke" />
+    <dialog
+        android:id="@+id/recipesBottomSheet"
+        android:name="com.gmail.orlandroyd.foody.presentation.recipes.bottomsheet.RecipesBottomSheet"
+        android:label="recipes_bottom_sheet"
+        tools:layout="@layout/recipes_bottom_sheet">
+        <action
+            android:id="@+id/action_recipesBottomSheet_to_recipesFragment"
+            app:destination="@id/recipesFragment"
+            app:popUpTo="@id/recipesFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 
 </navigation>
