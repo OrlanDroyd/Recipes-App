@@ -12,6 +12,7 @@ import coil.load
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.remote.dto.ResultDto
 import com.gmail.orlandroyd.foody.presentation.recipes.RecipesFragmentDirections
+import org.jsoup.Jsoup
 
 class RecipesRowBinding {
 
@@ -64,5 +65,15 @@ class RecipesRowBinding {
                 }
             }
         }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, description: String?) {
+            if (description != null) {
+                val desc = Jsoup.parse(description).text()
+                textView.text = desc
+            }
+        }
+
     }
 }
