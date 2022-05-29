@@ -6,28 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.orlandroyd.foody.MainViewModel
 import com.gmail.orlandroyd.foody.R
-import com.gmail.orlandroyd.foody.data.mapper.toFoodRecipe
 import com.gmail.orlandroyd.foody.databinding.FragmentRecipesBinding
 import com.gmail.orlandroyd.foody.util.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipesFragment : Fragment(R.layout.fragment_recipes) {
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var recipesViewModel: RecipesViewModel
+    private val recipesViewModel by viewModels<RecipesViewModel>()
+    private val mainViewModel by viewModels<MainViewModel>()
     private val mAdapter by lazy { RecipesAdapter() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,20 +43,20 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             when (response) {
                 is NetworkResult.Error -> {
                     hideShimmerEffect()
-                    response.data?.let {
-                        mAdapter.setData(it.toFoodRecipe())
-                    }
-                }
-                is NetworkResult.Loading -> {
-                    hideShimmerEffect()
                     Toast.makeText(
                         requireContext(),
                         response.message.toString(),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is NetworkResult.Success -> {
+                is NetworkResult.Loading -> {
                     showShimmerEffect()
+                }
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    response.data?.let {
+                        mAdapter.setData(it)
+                    }
                 }
             }
         }

@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.gmail.orlandroyd.foody.data.remote.dto.FoodRecipeDto
+import com.gmail.orlandroyd.foody.data.remote.dto.ResultDto
 import com.gmail.orlandroyd.foody.databinding.RecipesRowLayoutBinding
-import com.gmail.orlandroyd.foody.domain.model.FoodRecipe
-import com.gmail.orlandroyd.foody.domain.model.Result
 
 class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
-    private var recipes = emptyList<Result>()
+    private var recipes = emptyList<ResultDto>()
 
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(result: Result){
+        fun bind(result: ResultDto) {
             binding.result = result
             binding.executePendingBindings()
         }
@@ -43,7 +43,7 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
         return recipes.size
     }
 
-    fun setData(newData: FoodRecipe){
+    fun setData(newData: FoodRecipeDto) {
         val recipesDiffUtil =
             RecipesDiffUtil(recipes, newData.results)
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)

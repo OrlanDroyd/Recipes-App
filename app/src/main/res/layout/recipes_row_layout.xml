@@ -7,7 +7,7 @@
 
         <variable
             name="result"
-            type="com.gmail.orlandroyd.foody.domain.model.Result" />
+            type="com.gmail.orlandroyd.foody.data.remote.dto.ResultDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

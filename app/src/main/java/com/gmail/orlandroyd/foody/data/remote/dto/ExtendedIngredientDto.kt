@@ -1,7 +1,10 @@
 package com.gmail.orlandroyd.foody.data.remote.dto
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ExtendedIngredientDto(
     @SerializedName("amount")
     val amount: Double,
@@ -15,4 +18,4 @@ data class ExtendedIngredientDto(
     val original: String,
     @SerializedName("unit")
     val unit: String
-)
+) : Parcelable

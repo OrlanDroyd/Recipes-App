@@ -1,7 +1,11 @@
 package com.gmail.orlandroyd.foody.data.remote.dto
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
+@Parcelize
 data class ResultDto(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -10,7 +14,7 @@ data class ResultDto(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredientDto>,
+    val extendedIngredients: @RawValue List<ExtendedIngredientDto>,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
@@ -33,4 +37,4 @@ data class ResultDto(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
-)
+): Parcelable

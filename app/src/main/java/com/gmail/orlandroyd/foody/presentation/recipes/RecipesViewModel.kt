@@ -27,4 +27,5 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
     }
+
 }
