@@ -7,7 +7,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.gmail.orlandroyd.foody.data.datastore.DataStoreRepository
 import com.gmail.orlandroyd.foody.data.datastore.MealAndDietType
-import com.gmail.orlandroyd.foody.util.Constants
+import com.gmail.orlandroyd.foody.util.Constants.Companion.API_KEY
+import com.gmail.orlandroyd.foody.util.Constants.Companion.DEFAULT_DIET_TYPE
+import com.gmail.orlandroyd.foody.util.Constants.Companion.DEFAULT_MEAL_TYPE
+import com.gmail.orlandroyd.foody.util.Constants.Companion.DEFAULT_RECIPES_NUMBER
 import com.gmail.orlandroyd.foody.util.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
 import com.gmail.orlandroyd.foody.util.Constants.Companion.QUERY_API_KEY
 import com.gmail.orlandroyd.foody.util.Constants.Companion.QUERY_DIET
@@ -66,12 +69,20 @@ class RecipesViewModel @Inject constructor(
 
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
-        queries[QUERY_NUMBER] = "50"
-        queries[QUERY_API_KEY] = Constants.API_KEY
-        queries[QUERY_TYPE] = "snack"
-        queries[QUERY_DIET] = "vegan"
+
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
+
+        if (this@RecipesViewModel::mealAndDiet.isInitialized) {
+            queries[QUERY_TYPE] = mealAndDiet.selectedMealType
+            queries[QUERY_DIET] = mealAndDiet.selectedDietType
+        } else {
+            queries[QUERY_TYPE] = DEFAULT_MEAL_TYPE
+            queries[QUERY_DIET] = DEFAULT_DIET_TYPE
+        }
+
         return queries
     }
 
