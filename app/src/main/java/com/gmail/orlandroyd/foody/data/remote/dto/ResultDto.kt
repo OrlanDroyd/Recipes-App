@@ -20,7 +20,7 @@ data class ResultDto(
     @SerializedName("id")
     val recipeId: Int,
     @SerializedName("image")
-    val image: String,
+    val image: String?,
     @SerializedName("readyInMinutes")
     val readyInMinutes: Int,
     @SerializedName("sourceName")
