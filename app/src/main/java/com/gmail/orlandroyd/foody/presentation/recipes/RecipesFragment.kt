@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.orlandroyd.foody.MainViewModel
 import com.gmail.orlandroyd.foody.databinding.FragmentRecipesBinding
@@ -23,6 +24,8 @@ class RecipesFragment : Fragment() {
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
+
+    private val args by navArgs<RecipesFragmentArgs>()
 
     private val recipesViewModel by viewModels<RecipesViewModel>()
     private val mainViewModel by viewModels<MainViewModel>()
@@ -52,7 +55,7 @@ class RecipesFragment : Fragment() {
     private fun readDatabase() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "readDatabase called!")
                     mAdapter.setData(database.first().foodRecipe)
                     hideShimmerEffect()
