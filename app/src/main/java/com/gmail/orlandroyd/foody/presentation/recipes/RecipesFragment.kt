@@ -2,10 +2,9 @@ package com.gmail.orlandroyd.foody.presentation.recipes
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gmail.orlandroyd.foody.MainViewModel
+import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.databinding.FragmentRecipesBinding
 import com.gmail.orlandroyd.foody.util.NetworkListener
 import com.gmail.orlandroyd.foody.util.NetworkResult
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RecipesFragment : Fragment() {
+class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +43,8 @@ class RecipesFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
+
+        setHasOptionsMenu(true)
 
         setupRecyclerView()
         readDatabase()
@@ -143,9 +145,28 @@ class RecipesFragment : Fragment() {
         binding.recyclerview.visibility = View.VISIBLE
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipes_menu, menu)
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            // TODO: searchApiData(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return true
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
