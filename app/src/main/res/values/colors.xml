@@ -28,4 +28,10 @@
     <color name="titleColor">@color/darker</color>
     <color name="descriptionColor">@color/darkGray</color>
 
+    // Custom Chip Style
+    <color name="checkedChipBackgroundColor">#206200EA</color>
+    <color name="chipBackgroundColor">@color/lightGray</color>
+    <color name="checkedChipTextColor">@color/purple_500</color>
+    <color name="chipTextColor">@color/darkGray</color>
+
 </resources>
