@@ -1,10 +1,9 @@
 package com.gmail.orlandroyd.foody.presentation.foodjoke
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -72,6 +71,22 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.food_joke_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.share_food_joke_menu) {
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, foodJoke)
+                type = "text/plain"
+            }
+            startActivity(shareIntent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {
