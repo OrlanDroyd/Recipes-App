@@ -4,10 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
+import com.gmail.orlandroyd.foody.data.local.entities.FoodJokeEntity
 import com.gmail.orlandroyd.foody.data.local.entities.RecipesEntity
 
 @Database(
-    entities = [RecipesEntity::class, FavoritesEntity::class],
+    entities = [RecipesEntity::class, FavoritesEntity::class, FoodJokeEntity::class],
     version = 1,
     exportSchema = false
 )
