@@ -2,6 +2,7 @@ package com.gmail.orlandroyd.foody.presentation.favorites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
@@ -38,6 +39,17 @@ class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.MyVie
 
         val currentRecipe = favoriteRecipes[position]
         holder.bind(currentRecipe)
+
+        /**
+         * Single Click Listener
+         * */
+        holder.binding.favoriteRecipesRowLayout.setOnClickListener {
+            val action =
+                FavoriteRecipesFragmentDirections.actionFavoriteRecipesFragmentToDetailsActivity(
+                    currentRecipe.result
+                )
+            holder.itemView.findNavController().navigate(action)
+        }
 
     }
 
