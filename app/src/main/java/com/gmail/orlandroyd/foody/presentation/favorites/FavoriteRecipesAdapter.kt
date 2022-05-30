@@ -1,15 +1,23 @@
 package com.gmail.orlandroyd.foody.presentation.favorites
 
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.appcompat.view.ActionMode
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
 import com.gmail.orlandroyd.foody.databinding.FavoriteRecipesRowLayoutBinding
 import com.gmail.orlandroyd.foody.presentation.recipes.RecipesDiffUtil
 
-class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.MyViewHolder>() {
+class FavoriteRecipesAdapter(
+    private val requireActivity: FragmentActivity,
+) : RecyclerView.Adapter<FavoriteRecipesAdapter.MyViewHolder>(),
+    ActionMode.Callback {
 
     private var favoriteRecipes = emptyList<FavoritesEntity>()
 
@@ -51,6 +59,14 @@ class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.MyVie
             holder.itemView.findNavController().navigate(action)
         }
 
+        /**
+         * Long Click Listener
+         * */
+        holder.binding.favoriteRecipesRowLayout.setOnLongClickListener {
+            requireActivity.startActionMode(this)
+            true
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -63,6 +79,23 @@ class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.MyVie
         val diffUtilResult = DiffUtil.calculateDiff(favoriteRecipesDiffUtil)
         favoriteRecipes = newFavoriteRecipes
         diffUtilResult.dispatchUpdatesTo(this)
+    }
+
+    override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
+        actionMode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
+        return true
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        return true
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        return true
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+
     }
 
 }
