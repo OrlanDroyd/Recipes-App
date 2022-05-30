@@ -45,5 +45,6 @@
     <string name="delete_favorite_menu">Delete Favorite Menu</string>
     <string name="delete_all">Delete All</string>
     <string name="error">Error</string>
+    <string name="share">Share</string>
 
 </resources>
