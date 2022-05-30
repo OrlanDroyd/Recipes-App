@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class FavoriteRecipesAdapter(
     private val requireActivity: FragmentActivity,
-    private val mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel,
 ) : RecyclerView.Adapter<FavoriteRecipesAdapter.MyViewHolder>(),
     ActionMode.Callback {
 
@@ -96,7 +96,7 @@ class FavoriteRecipesAdapter(
             applyActionModeTitle()
         } else {
             selectedRecipes.add(currentRecipe)
-            changeRecipeStyle(holder, R.color.cardBackgroundLightColor, R.color.purple_500)
+            changeRecipeStyle(holder, R.color.cardBackgroundLightColor, R.color.colorPrimary)
             applyActionModeTitle()
         }
     }
