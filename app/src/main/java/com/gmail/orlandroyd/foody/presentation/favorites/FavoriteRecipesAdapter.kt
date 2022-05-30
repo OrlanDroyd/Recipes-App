@@ -18,6 +18,8 @@ class FavoriteRecipesAdapter(
 
     private var multiSelection = false
 
+    private lateinit var mActionMode: ActionMode
+
     private var selectedRecipes = arrayListOf<FavoritesEntity>()
     private var myViewHolders = arrayListOf<MyViewHolder>()
     private var favoriteRecipes = emptyList<FavoritesEntity>()
@@ -86,9 +88,11 @@ class FavoriteRecipesAdapter(
         if (selectedRecipes.contains(currentRecipe)) {
             selectedRecipes.remove(currentRecipe)
             changeRecipeStyle(holder, R.color.cardBackgroundColor, R.color.strokeColor)
+            applyActionModeTitle()
         } else {
             selectedRecipes.add(currentRecipe)
             changeRecipeStyle(holder, R.color.cardBackgroundLightColor, R.color.purple_500)
+            applyActionModeTitle()
         }
     }
 
@@ -106,6 +110,7 @@ class FavoriteRecipesAdapter(
 
     override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
         actionMode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
+        mActionMode = actionMode!!
         applyStatusBarColor(R.color.contextualStatusBarColor)
         return true
     }
@@ -125,6 +130,21 @@ class FavoriteRecipesAdapter(
         multiSelection = false
         selectedRecipes.clear()
         applyStatusBarColor(R.color.statusBarColor)
+    }
+
+    private fun applyActionModeTitle() {
+        when (selectedRecipes.size) {
+            0 -> {
+                mActionMode.finish()
+                multiSelection = false
+            }
+            1 -> {
+                mActionMode.title = "${selectedRecipes.size} item selected"
+            }
+            else -> {
+                mActionMode.title = "${selectedRecipes.size} items selected"
+            }
+        }
     }
 
     private fun applyStatusBarColor(color: Int) {
