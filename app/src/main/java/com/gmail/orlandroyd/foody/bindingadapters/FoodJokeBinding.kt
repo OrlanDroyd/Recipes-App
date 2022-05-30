@@ -56,6 +56,9 @@ class FoodJokeBinding {
                         }
                     }
                 }
+                else -> {
+                    // Nothing
+                }
             }
         }
 
