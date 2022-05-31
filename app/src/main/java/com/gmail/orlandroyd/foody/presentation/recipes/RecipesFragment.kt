@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.databinding.FragmentRecipesBinding
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.util.NetworkListener
 import com.gmail.orlandroyd.foody.util.NetworkResult
 import com.gmail.orlandroyd.foody.util.observeOnce
@@ -71,7 +71,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                 .collect { status ->
                     Log.d("NetworkListener", status.toString())
                     recipesViewModel.networkStatus = status
-                    recipesViewModel.showNetworkStatus()
+                    showNetworkStatus(recipesViewModel.showNetworkStatus())
                     readDatabase()
                 }
         }
@@ -85,6 +85,12 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         return binding.root
+    }
+
+    private fun showNetworkStatus(msg: Int?) {
+        if (msg != null) {
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupRecyclerView() {

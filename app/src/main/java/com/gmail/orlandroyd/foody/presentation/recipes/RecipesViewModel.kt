@@ -1,10 +1,10 @@
 package com.gmail.orlandroyd.foody.presentation.recipes
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.datastore.DataStoreRepository
 import com.gmail.orlandroyd.foody.data.datastore.MealAndDietType
 import com.gmail.orlandroyd.foody.util.Constants.Companion.API_KEY
@@ -97,16 +97,17 @@ class RecipesViewModel @Inject constructor(
         return queries
     }
 
-    fun showNetworkStatus() {
+    fun showNetworkStatus(): Int? {
         if (!networkStatus) {
-            Toast.makeText(getApplication(), "No Internet Connection.", Toast.LENGTH_SHORT).show()
             saveBackOnline(true)
+            return R.string.msg_no_internet
         } else if (networkStatus) {
             if (backOnline) {
-                Toast.makeText(getApplication(), "We're back online.", Toast.LENGTH_SHORT).show()
                 saveBackOnline(false)
+                return R.string.msg_back_online
             }
         }
+        return null
     }
 
 }
