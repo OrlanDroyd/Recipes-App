@@ -7,7 +7,7 @@
 
         <variable
             name="mainViewModel"
-            type="com.gmail.orlandroyd.foody.MainViewModel" />
+            type="com.gmail.orlandroyd.foody.presentation.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

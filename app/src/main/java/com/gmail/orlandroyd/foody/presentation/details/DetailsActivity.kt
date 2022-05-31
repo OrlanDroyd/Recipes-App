@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
-import com.gmail.orlandroyd.foody.MainViewModel
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
 import com.gmail.orlandroyd.foody.databinding.ActivityDetailsBinding

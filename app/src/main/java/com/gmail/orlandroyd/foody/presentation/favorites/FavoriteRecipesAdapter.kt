@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.gmail.orlandroyd.foody.MainViewModel
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
 import com.gmail.orlandroyd.foody.databinding.FavoriteRecipesRowLayoutBinding

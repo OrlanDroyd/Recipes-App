@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.gmail.orlandroyd.foody.MainViewModel
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.databinding.FragmentFoodJokeBinding
 import com.gmail.orlandroyd.foody.util.Constants.Companion.API_KEY

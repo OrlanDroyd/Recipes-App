@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gmail.orlandroyd.foody.MainViewModel
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.databinding.FragmentFavoriteRecipesBinding
 import com.google.android.material.snackbar.Snackbar

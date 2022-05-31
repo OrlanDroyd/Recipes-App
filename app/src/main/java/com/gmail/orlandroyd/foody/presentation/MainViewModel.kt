@@ -1,4 +1,4 @@
-package com.gmail.orlandroyd.foody
+package com.gmail.orlandroyd.foody.presentation
 
 import android.app.Application
 import android.content.Context
