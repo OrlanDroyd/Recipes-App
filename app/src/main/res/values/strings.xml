@@ -48,5 +48,11 @@
     <string name="share">Share</string>
     <string name="msg_no_internet">No Internet Connection.</string>
     <string name="msg_back_online">We\'re back online.</string>
+    <string name="overview">Overview</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="msg_save">Recipe saved.</string>
+    <string name="msg_removed">Removed from Favorites.</string>
+    <string name="ok">Okay</string>
 
 </resources>

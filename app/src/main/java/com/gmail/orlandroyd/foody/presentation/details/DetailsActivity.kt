@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
-import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.R
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
 import com.gmail.orlandroyd.foody.databinding.ActivityDetailsBinding
+import com.gmail.orlandroyd.foody.presentation.MainViewModel
 import com.gmail.orlandroyd.foody.presentation.details.ingredients.IngredientsFragment
 import com.gmail.orlandroyd.foody.presentation.details.instructions.InstructionsFragment
 import com.gmail.orlandroyd.foody.presentation.details.overview.OverviewFragment
@@ -50,9 +50,9 @@ class DetailsActivity : AppCompatActivity() {
         fragments.add(InstructionsFragment())
 
         val titles = ArrayList<String>()
-        titles.add("Overview")
-        titles.add("Ingredients")
-        titles.add("Instructions")
+        titles.add(getString(R.string.overview))
+        titles.add(getString(R.string.ingredients))
+        titles.add(getString(R.string.instructions))
 
         val resultBundle = Bundle()
         resultBundle.putParcelable(RECIPE_RESULT_KEY, args.result)
@@ -115,7 +115,7 @@ class DetailsActivity : AppCompatActivity() {
             )
         mainViewModel.insertFavoriteRecipe(favoritesEntity)
         changeMenuItemColor(item, R.color.yellow)
-        showSnackBar("Recipe saved.")
+        showSnackBar(getString(R.string.msg_save))
         recipeSaved = true
     }
 
@@ -127,7 +127,7 @@ class DetailsActivity : AppCompatActivity() {
             )
         mainViewModel.deleteFavoriteRecipe(favoritesEntity)
         changeMenuItemColor(item, R.color.white)
-        showSnackBar("Removed from Favorites.")
+        showSnackBar(getString(R.string.msg_removed))
         recipeSaved = false
     }
 
@@ -140,7 +140,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.detailsLayout,
             message,
             Snackbar.LENGTH_SHORT
-        ).setAction("Okay") {}
+        ).setAction(getString(R.string.ok)) {}
             .show()
     }
 
