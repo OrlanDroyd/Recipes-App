@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
+class FoodJokeFragment : Fragment() {
 
     private val mainViewModel by viewModels<MainViewModel>()
 
@@ -62,17 +62,6 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
         return binding.root
     }
 
-    private fun loadDataFromCache() {
-        lifecycleScope.launch {
-            mainViewModel.readFoodJoke.observe(viewLifecycleOwner) { database ->
-                if (!database.isNullOrEmpty()) {
-                    binding.foodJokeTextView.text = database.first().foodJoke.text
-                    foodJoke = database.first().foodJoke.text
-                }
-            }
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.food_joke_menu, menu)
     }
@@ -89,9 +78,19 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun loadDataFromCache() {
+        lifecycleScope.launch {
+            mainViewModel.readFoodJoke.observe(viewLifecycleOwner) { database ->
+                if (!database.isNullOrEmpty()) {
+                    binding.foodJokeTextView.text = database.first().foodJoke.text
+                    foodJoke = database.first().foodJoke.text
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
