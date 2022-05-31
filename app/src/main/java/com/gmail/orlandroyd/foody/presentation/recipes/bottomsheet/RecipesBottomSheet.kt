@@ -21,13 +21,13 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var recipesViewModel: RecipesViewModel
 
+    private var _binding: RecipesBottomSheetBinding? = null
+    private val binding get() = _binding!!
+
     private var mealTypeChip = DEFAULT_MEAL_TYPE
     private var mealTypeChipId = 0
     private var dietTypeChip = DEFAULT_DIET_TYPE
     private var dietTypeChipId = 0
-
-    private var _binding: RecipesBottomSheetBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         _binding = RecipesBottomSheetBinding.inflate(inflater, container, false)
@@ -46,16 +46,22 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             dietTypeChip = value.selectedDietType
             updateChip(value.selectedMealTypeId, binding.mealTypeChipGroup)
             updateChip(value.selectedDietTypeId, binding.dietTypeChipGroup)
+            Log.i("PREFERENCES", "onCreateView: ${value.selectedMealType}")
+            Log.i("PREFERENCES", "onCreateView: ${value.selectedDietType}")
+            Log.i("PREFERENCES", "onCreateView: ${binding.mealTypeChipGroup}")
+            Log.i("PREFERENCES", "onCreateView: ${binding.dietTypeChipGroup}")
         }
 
-        binding.mealTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
+        binding.mealTypeChipGroup.setOnCheckedStateChangeListener { group: ChipGroup, _: MutableList<Int> ->
+            val selectedChipId = binding.mealTypeChipGroup.checkedChipId
             val chip = group.findViewById<Chip>(selectedChipId)
             val selectedMealType = chip.text.toString().lowercase(Locale.ROOT)
             mealTypeChip = selectedMealType
             mealTypeChipId = selectedChipId
         }
 
-        binding.dietTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
+        binding.dietTypeChipGroup.setOnCheckedStateChangeListener { group: ChipGroup, _: MutableList<Int> ->
+            val selectedChipId = binding.dietTypeChipGroup.checkedChipId
             val chip = group.findViewById<Chip>(selectedChipId)
             val selectedDietType = chip.text.toString().lowercase(Locale.ROOT)
             dietTypeChip = selectedDietType

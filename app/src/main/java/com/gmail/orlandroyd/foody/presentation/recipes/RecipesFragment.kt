@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,16 +24,29 @@ import kotlinx.coroutines.launch
 class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
+    private val args by navArgs<RecipesFragmentArgs>()
+
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
-    private val args by navArgs<RecipesFragmentArgs>()
-
-    private val recipesViewModel by viewModels<RecipesViewModel>()
-    private val mainViewModel by viewModels<MainViewModel>()
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var recipesViewModel: RecipesViewModel
     private val mAdapter by lazy { RecipesAdapter() }
 
     private lateinit var networkListener: NetworkListener
+
+    override fun onResume() {
+        super.onResume()
+        if (mainViewModel.recyclerViewState != null) {
+            binding.recyclerview.layoutManager?.onRestoreInstanceState(mainViewModel.recyclerViewState)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -186,13 +199,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.shimmerFrameLayout.stopShimmer()
         binding.shimmerFrameLayout.visibility = View.GONE
         binding.recyclerview.visibility = View.VISIBLE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (mainViewModel.recyclerViewState != null) {
-            binding.recyclerview.layoutManager?.onRestoreInstanceState(mainViewModel.recyclerViewState)
-        }
     }
 
     override fun onDestroyView() {
