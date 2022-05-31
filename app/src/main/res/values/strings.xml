@@ -54,5 +54,6 @@
     <string name="msg_save">Recipe saved.</string>
     <string name="msg_removed">Removed from Favorites.</string>
     <string name="ok">Okay</string>
+    <string name="msg_remuve_all">All recipes removed.</string>
 
 </resources>
