@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
+
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
@@ -40,14 +41,12 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
-
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
 
         setHasOptionsMenu(true)
 
         setupRecyclerView()
-        readDatabase()
 
         recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
             recipesViewModel.backOnline = it
@@ -66,14 +65,39 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
         binding.recipesFab.setOnClickListener {
             if (recipesViewModel.networkStatus) {
-                val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
             } else {
                 recipesViewModel.showNetworkStatus()
             }
         }
 
         return binding.root
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerview.adapter = mAdapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+        showShimmerEffect()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipes_menu, menu)
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchApiData(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return true
     }
 
     private fun readDatabase() {
@@ -91,9 +115,15 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun requestApiData() {
+        Log.d("RecipesFragment", "requestApiData called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    response.data?.let { mAdapter.setData(it) }
+                    recipesViewModel.saveMealAndDietType()
+                }
                 is NetworkResult.Error -> {
                     hideShimmerEffect()
                     loadDataFromCache()
@@ -105,13 +135,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
                 is NetworkResult.Loading -> {
                     showShimmerEffect()
-                }
-                is NetworkResult.Success -> {
-                    hideShimmerEffect()
-                    response.data?.let {
-                        mAdapter.setData(it)
-                    }
-                    recipesViewModel.saveMealAndDietType()
                 }
             }
         }
@@ -153,12 +176,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private fun setupRecyclerView() {
-        binding.recyclerview.adapter = mAdapter
-        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
-        showShimmerEffect()
-    }
-
     private fun showShimmerEffect() {
         binding.shimmerFrameLayout.startShimmer()
         binding.shimmerFrameLayout.visibility = View.VISIBLE
@@ -171,28 +188,17 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.recyclerview.visibility = View.VISIBLE
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.recipes_menu, menu)
-
-        val search = menu.findItem(R.id.menu_search)
-        val searchView = search.actionView as? SearchView
-        searchView?.isSubmitButtonEnabled = true
-        searchView?.setOnQueryTextListener(this)
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            searchApiData(query)
+    override fun onResume() {
+        super.onResume()
+        if (mainViewModel.recyclerViewState != null) {
+            binding.recyclerview.layoutManager?.onRestoreInstanceState(mainViewModel.recyclerViewState)
         }
-        return true
-    }
-
-    override fun onQueryTextChange(p0: String?): Boolean {
-        return true
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mainViewModel.recyclerViewState =
+            binding.recyclerview.layoutManager?.onSaveInstanceState()
         _binding = null
     }
 }

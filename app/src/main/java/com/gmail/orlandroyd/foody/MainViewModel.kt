@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Parcelable
 import androidx.lifecycle.*
 import com.gmail.orlandroyd.foody.data.Repository
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
@@ -24,6 +25,8 @@ class MainViewModel @Inject constructor(
     application: Application,
 ) : AndroidViewModel(application) {
 
+    var recyclerViewState: Parcelable? = null
+
     /** ROOM DATABASE */
 
     val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
@@ -41,14 +44,14 @@ class MainViewModel @Inject constructor(
             repository.local.insertFavoriteRecipes(favoritesEntity)
         }
 
-    fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.local.deleteFavoriteRecipe(favoritesEntity)
-        }
-
     private fun insertFoodJoke(foodJokeEntity: FoodJokeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             repository.local.insertFoodJoke(foodJokeEntity)
+        }
+
+    fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteFavoriteRecipe(favoritesEntity)
         }
 
     fun deleteAllFavoriteRecipes() =
@@ -84,7 +87,6 @@ class MainViewModel @Inject constructor(
                 if (foodRecipe != null) {
                     offlineCacheRecipes(foodRecipe)
                 }
-
             } catch (e: Exception) {
                 recipesResponse.value = NetworkResult.Error("Recipes not found.")
             }
