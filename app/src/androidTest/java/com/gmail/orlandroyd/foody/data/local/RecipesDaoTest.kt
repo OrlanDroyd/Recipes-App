@@ -3,7 +3,9 @@ package com.gmail.orlandroyd.foody.data.local
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
+import com.gmail.orlandroyd.foody.data.local.entities.FoodJokeEntity
 import com.gmail.orlandroyd.foody.data.local.entities.RecipesEntity
+import com.gmail.orlandroyd.foody.data.remote.dto.FoodJokeDto
 import com.gmail.orlandroyd.foody.data.remote.dto.FoodRecipeDto
 import com.gmail.orlandroyd.foody.data.remote.dto.ResultDto
 import com.google.common.truth.Truth.assertThat
@@ -89,5 +91,19 @@ class RecipesDaoTest {
         assertThat(allFavoriteRecipesItems).isNotEmpty()
 
     }
+
+    @Test
+    fun insertFoodJokeItem() = runTest {
+
+        val foodJokeItem = FoodJokeEntity(foodJoke = FoodJokeDto(text = ""))
+
+        dao.insertFoodJoke(foodJokeItem)
+
+        val allFoodJokeItems = dao.readFoodJoke().first()
+
+        assertThat(allFoodJokeItems).isNotEmpty()
+
+    }
+
 
 }
