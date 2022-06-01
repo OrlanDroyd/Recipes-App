@@ -1,8 +1,11 @@
 package com.gmail.orlandroyd.foody.data.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.SmallTest
+import com.gmail.orlandroyd.foody.data.local.entities.FavoritesEntity
 import com.gmail.orlandroyd.foody.data.local.entities.RecipesEntity
 import com.gmail.orlandroyd.foody.data.remote.dto.FoodRecipeDto
+import com.gmail.orlandroyd.foody.data.remote.dto.ResultDto
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -18,6 +21,7 @@ import javax.inject.Named
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
+@SmallTest
 class RecipesDaoTest {
 
     @get:Rule
@@ -54,6 +58,35 @@ class RecipesDaoTest {
         val allRecipesItems = dao.readRecipes().first()
 
         assertThat(allRecipesItems).isNotEmpty()
+
+    }
+
+    @Test
+    fun insertFavoriteRecipeItem() = runTest {
+
+        val favoriteRecipeItem = FavoritesEntity(
+            id = 0, result = ResultDto(aggregateLikes = 0,
+                cheap = false,
+                dairyFree = false,
+                extendedIngredients = listOf(),
+                glutenFree = false,
+                recipeId = 0,
+                image = null,
+                readyInMinutes = 0,
+                sourceName = null,
+                sourceUrl = "",
+                summary = "",
+                title = "",
+                vegan = false,
+                vegetarian = false,
+                veryHealthy = false)
+        )
+
+        dao.insertFavoriteRecipe(favoriteRecipeItem)
+
+        val allFavoriteRecipesItems = dao.readFavoriteRecipes().first()
+
+        assertThat(allFavoriteRecipesItems).isNotEmpty()
 
     }
 
