@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -15,6 +16,7 @@ object TestAppModule {
 
     @Provides
     @Singleton
+    @Named("test_db")
     fun provideRecipesDatabase(app: Application): RecipesDatabase {
         return Room.inMemoryDatabaseBuilder(
             app,
