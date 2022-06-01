@@ -105,5 +105,36 @@ class RecipesDaoTest {
 
     }
 
+    @Test
+    fun deleteFavoriteRecipeItem() = runTest {
+
+        val favoriteRecipeItem = FavoritesEntity(
+            id = 0, result = ResultDto(aggregateLikes = 0,
+                cheap = false,
+                dairyFree = false,
+                extendedIngredients = listOf(),
+                glutenFree = false,
+                recipeId = 0,
+                image = null,
+                readyInMinutes = 0,
+                sourceName = null,
+                sourceUrl = "",
+                summary = "",
+                title = "",
+                vegan = false,
+                vegetarian = false,
+                veryHealthy = false)
+        )
+
+        dao.insertFavoriteRecipe(favoriteRecipeItem)
+
+        dao.deleteFavoriteRecipe(favoriteRecipeItem)
+
+        val allFavoriteRecipesItems = dao.readFavoriteRecipes().first()
+
+        assertThat(allFavoriteRecipesItems).doesNotContain(favoriteRecipeItem)
+
+    }
+
 
 }
